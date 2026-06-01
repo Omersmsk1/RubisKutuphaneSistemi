@@ -1,4 +1,5 @@
 import "./Dashboard.css";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
   return (
@@ -7,9 +8,11 @@ function Dashboard() {
 
       <div className="dashboard-grid">
 
-        <div className="card">
-          <h2>📚 Kitaplar</h2>
-        </div>
+        <Link to="/kitaplar">
+          <div className="card">
+            <h2>📚 Kitaplar</h2>
+          </div>
+        </Link>
 
         <div className="card">
           <h2>📖 Ödünç Al</h2>

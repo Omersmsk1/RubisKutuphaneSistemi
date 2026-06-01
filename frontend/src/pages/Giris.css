@@ -43,6 +43,7 @@
 }
 
 .register-btn {
+    width: 100%;
     padding: 12px;
     border: none;
     background-color: #16a34a;

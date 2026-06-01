@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
 import "./Giris.css";
 
 function Giris() {
   return (
     <div className="login-container">
       <div className="login-card">
+
         <h1>Rubis Kütüphane Sistemi</h1>
 
         <input
@@ -20,9 +22,12 @@ function Giris() {
           Giriş Yap
         </button>
 
-        <button className="register-btn">
-          Kayıt Ol
-        </button>
+        <Link to="/kayit">
+          <button className="register-btn">
+            Kayıt Ol
+          </button>
+        </Link>
+
       </div>
     </div>
   );

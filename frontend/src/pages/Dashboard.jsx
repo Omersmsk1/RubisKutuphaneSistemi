@@ -14,13 +14,17 @@ function Dashboard() {
           </div>
         </Link>
 
-        <div className="card">
-          <h2>📖 Ödünç Al</h2>
-        </div>
+        <Link to="/odunc">
+            <div className="card">
+             <h2>📖 Ödünç Al</h2>
+          </div>
+        </Link>
 
-        <div className="card">
-          <h2>📥 Kitap Teslim</h2>
-        </div>
+<Link to="/teslim">
+  <div className="card">
+    <h2>📥 Kitap Teslim</h2>
+  </div>
+</Link>
 
         <div className="card">
           <h2>🚪 Çıkış</h2>

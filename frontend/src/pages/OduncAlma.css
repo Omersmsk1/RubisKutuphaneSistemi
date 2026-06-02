@@ -1,0 +1,28 @@
+.odunc-container {
+    width: 400px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.odunc-container h1 {
+    text-align: center;
+}
+
+.odunc-container input {
+    padding: 12px;
+}
+
+.odunc-container button {
+    padding: 12px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+.odunc-container h1 {
+    text-align: center;
+    font-size: 42px;
+    margin-bottom: 30px;
+}

@@ -1,16 +1,66 @@
-const getBooks = (req, res) => {
-    res.json([
-        {
-            title: "Suç ve Ceza",
-            author: "Dostoyevski",
-            status: "Müsait"
-        },
-        {
-            title: "Sefiller",
-            author: "Victor Hugo",
-            status: "Ödünçte"
-        }
-    ]);
+const Book = require("../models/Book");
+
+const getBooks = async (req, res) => {
+
+    try {
+
+        const books = await Book.find();
+
+        res.json(books);
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: "Kitaplar getirilemedi"
+        });
+
+    }
 };
 
-module.exports = { getBooks };
+const addBook = async (req, res) => {
+
+    try {
+
+        const newBook = new Book({
+            title: req.body.title,
+            author: req.body.author,
+            status: "Müsait"
+        });
+
+        const savedBook = await newBook.save();
+
+        res.status(201).json(savedBook);
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: "Kitap eklenemedi"
+        });
+
+    }
+};
+
+const deleteBook = async (req, res) => {
+
+    try {
+
+        await Book.findByIdAndDelete(req.params.id);
+
+        res.json({
+            message: "Kitap silindi"
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: "Kitap silinemedi"
+        });
+
+    }
+};
+
+module.exports = {
+    getBooks,
+    addBook,
+    deleteBook
+};

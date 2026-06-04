@@ -59,8 +59,52 @@ const deleteBook = async (req, res) => {
     }
 };
 
+const borrowBook = async (req, res) => {
+
+    try {
+
+        const updatedBook = await Book.findByIdAndUpdate(
+            req.params.id,
+            { status: "Ödünçte" },
+            { new: true }
+        );
+
+        res.json(updatedBook);
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: "Kitap ödünç verilemedi"
+        });
+
+    }
+};
+
+const returnBook = async (req, res) => {
+
+    try {
+
+        const updatedBook = await Book.findByIdAndUpdate(
+            req.params.id,
+            { status: "Müsait" },
+            { new: true }
+        );
+
+        res.json(updatedBook);
+
+    } catch (err) {
+
+        res.status(500).json({
+            message: "Kitap teslim alınamadı"
+        });
+
+    }
+};
+
 module.exports = {
     getBooks,
     addBook,
-    deleteBook
+    deleteBook,
+    borrowBook,
+    returnBook
 };

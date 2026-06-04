@@ -27,3 +27,6 @@
     cursor: pointer;
     font-size: 16px;
 }
+.teslim-container select {
+    padding: 12px;
+}

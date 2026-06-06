@@ -1,75 +1,102 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+
 const register = async (req, res) => {
 
-    try {
+  try {
 
-      const hashedPassword = await bcrypt.hash(
-    req.body.password,
-    10
-);
+    const hashedPassword = await bcrypt.hash(
+      req.body.password,
+      10
+    );
 
-const newUser = new User({
-    fullName: req.body.fullName,
-    username: req.body.username,
-    email: req.body.email,
-    password: hashedPassword
-});
+    const newUser = new User({
+      fullName: req.body.fullName,
+      studentNo: req.body.studentNo,
+      username: req.body.username,
+      email: req.body.email,
+      password: hashedPassword,
+      role: "student"
+    });
 
-        await newUser.save();
+    await newUser.save();
 
-        res.status(201).json({
-            message: "Kullanıcı oluşturuldu"
-        });
+    res.status(201).json({
+      message: "Kullanıcı oluşturuldu"
+    });
 
-    } catch (err) {
+  } catch (err) {
 
-        res.status(500).json({
-            message: "Kayıt işlemi başarısız"
-        });
+    res.status(500).json({
+      message: "Kayıt işlemi başarısız"
+    });
 
-    }
+  }
 };
 
 const login = async (req, res) => {
 
-    try {
+  try {
 
-        const user = await User.findOne({
-            username: req.body.username
-        });
-
-        if (!user) {
-            return res.status(404).json({
-                message: "Kullanıcı bulunamadı"
-            });
-        }
-
-        const isMatch = await bcrypt.compare(
-    req.body.password,
-    user.password
-);
-
-if (!isMatch) {
-    return res.status(400).json({
-        message: "Şifre hatalı"
+    const user = await User.findOne({
+      username: req.body.username
     });
-}
 
-        res.status(200).json({
-            message: "Giriş başarılı"
-        });
-
-    } catch (err) {
-
-        res.status(500).json({
-            message: "Giriş başarısız"
-        });
-
+    if (!user) {
+      return res.status(404).json({
+        message: "Kullanıcı bulunamadı"
+      });
     }
+
+    const isMatch = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+
+    if (!isMatch) {
+      return res.status(400).json({
+        message: "Şifre hatalı"
+      });
+    }
+
+    res.status(200).json({
+      message: "Giriş başarılı",
+      username: user.username,
+      studentNo: user.studentNo,
+      role: user.role
+    });
+
+  } catch (err) {
+
+    res.status(500).json({
+      message: "Giriş başarısız"
+    });
+
+  }
+};
+
+const getUsers = async (req, res) => {
+
+  try {
+
+    const users = await User.find(
+      {},
+      "-password"
+    );
+
+    res.json(users);
+
+  } catch (err) {
+
+    res.status(500).json({
+      message: "Kullanıcılar getirilemedi"
+    });
+
+  }
 };
 
 module.exports = {
-    register,
-    login
+  register,
+  login,
+  getUsers
 };

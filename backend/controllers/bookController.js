@@ -1,5 +1,6 @@
 const Book = require("../models/Book");
 const Borrow = require("../models/Borrow");
+
 const getBooks = async (req, res) => {
 
     try {
@@ -24,7 +25,8 @@ const addBook = async (req, res) => {
         const newBook = new Book({
             title: req.body.title,
             author: req.body.author,
-            status: "Müsait"
+            status: "Müsait",
+            borrowedBy: ""
         });
 
         const savedBook = await newBook.save();
@@ -65,7 +67,10 @@ const borrowBook = async (req, res) => {
 
         const updatedBook = await Book.findByIdAndUpdate(
             req.params.id,
-            { status: "Ödünçte" },
+            {
+                status: "Ödünçte",
+                borrowedBy: req.body.studentNo
+            },
             { new: true }
         );
 
@@ -86,7 +91,10 @@ const returnBook = async (req, res) => {
 
         const updatedBook = await Book.findByIdAndUpdate(
             req.params.id,
-            { status: "Müsait" },
+            {
+                status: "Müsait",
+                borrowedBy: ""
+            },
             { new: true }
         );
 

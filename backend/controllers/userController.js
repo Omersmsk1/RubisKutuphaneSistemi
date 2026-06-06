@@ -1,15 +1,20 @@
 const User = require("../models/User");
-
+const bcrypt = require("bcryptjs");
 const register = async (req, res) => {
 
     try {
 
-        const newUser = new User({
-            fullName: req.body.fullName,
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password
-        });
+      const hashedPassword = await bcrypt.hash(
+    req.body.password,
+    10
+);
+
+const newUser = new User({
+    fullName: req.body.fullName,
+    username: req.body.username,
+    email: req.body.email,
+    password: hashedPassword
+});
 
         await newUser.save();
 
@@ -40,11 +45,16 @@ const login = async (req, res) => {
             });
         }
 
-        if (user.password !== req.body.password) {
-            return res.status(400).json({
-                message: "Şifre hatalı"
-            });
-        }
+        const isMatch = await bcrypt.compare(
+    req.body.password,
+    user.password
+);
+
+if (!isMatch) {
+    return res.status(400).json({
+        message: "Şifre hatalı"
+    });
+}
 
         res.status(200).json({
             message: "Giriş başarılı"

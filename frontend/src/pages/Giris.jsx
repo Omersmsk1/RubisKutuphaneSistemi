@@ -15,7 +15,7 @@ function Giris() {
   const loginUser = async () => {
 
     const response = await fetch(
-      "http://localhost:5000/api/users/login",
+      "https://rubiskutuphanesistemi.onrender.com/api/users/login",
       {
         method: "POST",
         headers: {

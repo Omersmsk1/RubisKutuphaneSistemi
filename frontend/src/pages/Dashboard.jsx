@@ -26,7 +26,7 @@ function Dashboard() {
 
   useEffect(() => {
 
-    fetch("http://localhost:5000/api/books")
+    fetch("https://rubiskutuphanesistemi.onrender.com/api/books")
       .then((res) => res.json())
       .then((data) => setBooks(data));
 

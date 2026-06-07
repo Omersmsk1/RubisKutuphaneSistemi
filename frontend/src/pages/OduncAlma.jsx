@@ -11,7 +11,7 @@ function OduncAlma() {
 
   useEffect(() => {
 
-    fetch("http://localhost:5000/api/books")
+    fetch("https://rubiskutuphanesistemi.onrender.com/api/books")
       .then((res) => res.json())
       .then((data) => {
 
@@ -32,7 +32,7 @@ function OduncAlma() {
     }
 
     await fetch(
-      `http://localhost:5000/api/books/borrow/${selectedBook}`,
+      `https://rubiskutuphanesistemi.onrender.com/api/books/borrow/${selectedBook}`,
       {
         method: "PUT",
         headers: {

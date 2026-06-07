@@ -12,7 +12,7 @@ function KitapTeslim() {
 
   useEffect(() => {
 
-    fetch("http://localhost:5000/api/books")
+    fetch("https://rubiskutuphanesistemi.onrender.com/api/books")
       .then((res) => res.json())
       .then((data) => {
 
@@ -42,7 +42,7 @@ function KitapTeslim() {
     }
 
     await fetch(
-      `http://localhost:5000/api/books/return/${selectedBook}`,
+      `https://rubiskutuphanesistemi.onrender.com/api/books/return/${selectedBook}`,
       {
         method: "PUT",
         headers: {

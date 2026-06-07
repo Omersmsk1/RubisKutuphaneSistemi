@@ -7,7 +7,7 @@ function Ogrenciler() {
 
   useEffect(() => {
 
-    fetch("http://localhost:5000/api/users")
+    fetch("https://rubiskutuphanesistemi.onrender.com/api/users")
       .then((res) => res.json())
       .then((data) => setUsers(data));
 

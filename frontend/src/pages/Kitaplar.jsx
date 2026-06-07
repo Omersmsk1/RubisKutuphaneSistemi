@@ -11,7 +11,7 @@ function Kitaplar() {
   const token = localStorage.getItem("token");
 
   const fetchBooks = () => {
-    fetch("http://localhost:5000/api/books")
+    fetch("https://rubiskutuphanesistemi.onrender.com/api/books")
       .then((res) => res.json())
       .then((data) => setBooks(data))
       .catch((err) => console.log(err));
@@ -28,17 +28,20 @@ function Kitaplar() {
       return;
     }
 
-    await fetch("http://localhost:5000/api/books", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        title,
-        author,
-      }),
-    });
+    await fetch(
+      "https://rubiskutuphanesistemi.onrender.com/api/books",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          title,
+          author,
+        }),
+      }
+    );
 
     setTitle("");
     setAuthor("");
@@ -48,12 +51,15 @@ function Kitaplar() {
 
   const deleteBook = async (id) => {
 
-    await fetch(`http://localhost:5000/api/books/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Authorization": `Bearer ${token}`
+    await fetch(
+      `https://rubiskutuphanesistemi.onrender.com/api/books/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
       }
-    });
+    );
 
     fetchBooks();
   };

@@ -2,11 +2,21 @@
 
 ## Proje Hakkında
 
-Rubis Kütüphane Sistemi, öğrencilerin kütüphane kaynaklarını dijital ortamda yönetebilmesini sağlayan web tabanlı bir otomasyon sistemidir.
+Rubis Kütüphane Sistemi, öğrencilerin kitapları görüntüleyebildiği, ödünç alabildiği ve teslim edebildiği web tabanlı bir kütüphane otomasyon sistemidir.
 
-Sistem sayesinde öğrenciler kayıt olup giriş yapabilir, kitapları görüntüleyebilir, ödünç alabilir ve teslim edebilir. Yönetici kullanıcılar ise kitap yönetimi ve öğrenci takibi işlemlerini gerçekleştirebilir.
+Proje, İstanbul Rumeli Üniversitesi Bilgisayar Mühendisliği Bölümü BLG330 Web Programlama dersi kapsamında geliştirilmiştir.
 
-Bu proje, İstanbul Rumeli Üniversitesi Bilgisayar Mühendisliği Bölümü BLG330 Web Programlama dersi kapsamında MERN mimarisi kullanılarak geliştirilmiştir.
+---
+
+## Canlı Sistem
+
+### Frontend
+
+https://rubis-kutuphane-sistemi.vercel.app
+
+### Backend API
+
+https://rubiskutuphanesistemi.onrender.com
 
 ---
 
@@ -17,6 +27,7 @@ Bu proje, İstanbul Rumeli Üniversitesi Bilgisayar Mühendisliği Bölümü BLG
 * React.js
 * React Router DOM
 * CSS3
+* Vite
 
 ### Backend
 
@@ -45,27 +56,28 @@ Bu proje, İstanbul Rumeli Üniversitesi Bilgisayar Mühendisliği Bölümü BLG
 ### Öğrenci İşlemleri
 
 * Kullanıcı kaydı oluşturma
-* Sisteme güvenli giriş yapma
-* Kitap listesini görüntüleme
+* Sisteme giriş yapma
+* Kitapları görüntüleme
 * Kitap ödünç alma
-* Kendi ödünç aldığı kitapları görüntüleme
 * Kendi ödünç aldığı kitapları teslim etme
-* Güvenli çıkış yapma
+* Çıkış yapma
 
 ### Yönetici İşlemleri
 
 * Kitap ekleme
 * Kitap silme
 * Kayıtlı öğrencileri görüntüleme
-* Tüm ödünç işlemlerini takip etme
-* Sistem istatistiklerini görüntüleme
+* Tüm ödünç alınan kitapları görüntüleme
 
-### Yetkilendirme Sistemi
+---
 
-* Admin ve Öğrenci rol ayrımı
-* JWT tabanlı kimlik doğrulama
-* Protected Route yapısı
-* Yetkisiz erişimlerin engellenmesi
+## Güvenlik Özellikleri
+
+* Şifreler bcrypt ile şifrelenmektedir.
+* JWT tabanlı kimlik doğrulama kullanılmaktadır.
+* Protected Route yapısı kullanılmaktadır.
+* Yetkisiz kullanıcıların korumalı sayfalara erişimi engellenmektedir.
+* Yönetici yetkisi gerektiren işlemler JWT doğrulaması ile korunmaktadır.
 
 ---
 
@@ -88,18 +100,19 @@ Bu proje, İstanbul Rumeli Üniversitesi Bilgisayar Mühendisliği Bölümü BLG
 | ---------- | ------ |
 | title      | String |
 | author     | String |
+| quantity   | Number |
 | status     | String |
 | borrowedBy | String |
 
----
+### Borrow
 
-## Güvenlik Özellikleri
-
-* Şifreler bcryptjs kullanılarak şifrelenmektedir.
-* JWT ile kullanıcı doğrulaması yapılmaktadır.
-* Korumalı sayfalar için Protected Route kullanılmaktadır.
-* Kullanıcı yetkileri rol bazlı olarak kontrol edilmektedir.
-* Öğrenciler yalnızca kendi ödünç aldıkları kitapları teslim edebilmektedir.
+| Alan       | Tip      |
+| ---------- | -------- |
+| studentNo  | String   |
+| bookId     | ObjectId |
+| borrowDate | Date     |
+| returnDate | Date     |
+| returned   | Boolean  |
 
 ---
 
@@ -137,7 +150,7 @@ JWT_SECRET=YOUR_SECRET_KEY
 * Giriş Sayfası
 * Kayıt Ol Sayfası
 * Dashboard
-* Kitap Yönetimi
+* Kitaplar
 * Kitap Ödünç Alma
 * Kitap Teslim
 * Öğrenci Yönetimi
@@ -146,15 +159,18 @@ JWT_SECRET=YOUR_SECRET_KEY
 
 ## Geliştirici
 
-**Muhammet Ömer Şimşek**
-Bilgisayar Mühendisliği
+Muhammet Ömer Şimşek
+
 İstanbul Rumeli Üniversitesi
+
+Bilgisayar Mühendisliği
+
 Öğrenci No: 241201026
 
 ---
 
 ## Ders Bilgisi
 
-**BLG330 - Web Programlama**
+BLG330 - Web Programlama
 
 2025-2026 Bahar Dönemi Projesi

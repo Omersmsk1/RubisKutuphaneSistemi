@@ -53,7 +53,7 @@ function KitapTeslim() {
 
     alert("Kitap başarıyla teslim edildi");
 
-    window.location.reload();
+   window.location.href = "/dashboard";
   };
 
   return (

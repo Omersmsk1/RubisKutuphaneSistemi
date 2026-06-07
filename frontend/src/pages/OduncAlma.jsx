@@ -47,7 +47,7 @@ function OduncAlma() {
 
     alert("Kitap başarıyla ödünç alındı");
 
-    window.location.reload();
+    window.location.href = "/dashboard";
   };
 
   return (

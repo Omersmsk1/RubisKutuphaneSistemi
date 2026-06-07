@@ -3,9 +3,12 @@ import "./KitapTeslim.css";
 
 function KitapTeslim() {
 
-  const [studentNo, setStudentNo] = useState("");
   const [books, setBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState("");
+
+  const studentNo = localStorage.getItem("studentNo");
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
   useEffect(() => {
 
@@ -13,30 +16,42 @@ function KitapTeslim() {
       .then((res) => res.json())
       .then((data) => {
 
-        const borrowedBooks = data.filter(
-          (book) => book.status === "Ödünçte"
-        );
+        const borrowedBooks = data.filter((book) => {
+
+          if (role === "admin") {
+            return book.status === "Ödünçte";
+          }
+
+          return (
+            book.status === "Ödünçte" &&
+            book.borrowedBy === studentNo
+          );
+
+        });
 
         setBooks(borrowedBooks);
       });
 
-  }, []);
+  }, [role, studentNo]);
 
   const returnBook = async () => {
 
-    if (!studentNo || !selectedBook) {
-      alert("Tüm alanları doldurun");
+    if (!selectedBook) {
+      alert("Kitap seçiniz");
       return;
     }
 
     await fetch(
       `http://localhost:5000/api/books/return/${selectedBook}`,
       {
-        method: "PUT"
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
       }
     );
 
-    alert("Kitap teslim alındı");
+    alert("Kitap başarıyla teslim edildi");
 
     window.location.reload();
   };
@@ -44,14 +59,11 @@ function KitapTeslim() {
   return (
     <div className="teslim-container">
 
-      <h1>Kitap Teslim</h1>
+      <h1>📥 Kitap Teslim</h1>
 
-      <input
-        type="text"
-        placeholder="Öğrenci Numarası"
-        value={studentNo}
-        onChange={(e) => setStudentNo(e.target.value)}
-      />
+      <p className="student-info">
+        Öğrenci No: {studentNo}
+      </p>
 
       <select
         value={selectedBook}
@@ -72,7 +84,7 @@ function KitapTeslim() {
       </select>
 
       <button onClick={returnBook}>
-        Kitabı Teslim Al
+        📥 Kitabı Teslim Et
       </button>
 
     </div>

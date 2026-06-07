@@ -3,9 +3,11 @@ import "./OduncAlma.css";
 
 function OduncAlma() {
 
-  const [studentNo, setStudentNo] = useState("");
   const [books, setBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState("");
+
+  const studentNo = localStorage.getItem("studentNo");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
 
@@ -24,19 +26,26 @@ function OduncAlma() {
 
   const borrowBook = async () => {
 
-    if (!studentNo || !selectedBook) {
-      alert("Tüm alanları doldurun");
+    if (!selectedBook) {
+      alert("Kitap seçiniz");
       return;
     }
 
     await fetch(
       `http://localhost:5000/api/books/borrow/${selectedBook}`,
       {
-        method: "PUT"
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          studentNo
+        })
       }
     );
 
-    alert("Kitap ödünç verildi");
+    alert("Kitap başarıyla ödünç alındı");
 
     window.location.reload();
   };
@@ -44,14 +53,11 @@ function OduncAlma() {
   return (
     <div className="odunc-container">
 
-      <h1>Kitap Ödünç Alma</h1>
+      <h1>📖 Kitap Ödünç Alma</h1>
 
-      <input
-        type="text"
-        placeholder="Öğrenci Numarası"
-        value={studentNo}
-        onChange={(e) => setStudentNo(e.target.value)}
-      />
+      <p className="student-info">
+        Öğrenci No: {studentNo}
+      </p>
 
       <select
         value={selectedBook}
@@ -72,7 +78,7 @@ function OduncAlma() {
       </select>
 
       <button onClick={borrowBook}>
-        Ödünç Ver
+        📖 Ödünç Al
       </button>
 
     </div>

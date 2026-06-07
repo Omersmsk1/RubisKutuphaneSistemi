@@ -4,14 +4,27 @@ import "./Giris.css";
 function KayitOl() {
 
   const [fullName, setFullName] = useState("");
+  const [studentNo, setStudentNo] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
+
   const registerUser = async () => {
 
-    if (!fullName || !username || !email || !password) {
-      alert("Tüm alanları doldurun");
+    if (
+      !fullName ||
+      !studentNo ||
+      !username ||
+      !email ||
+      !password
+    ) {
+
+      setMessage("Lütfen tüm alanları doldurun");
+      setMessageType("error");
+
       return;
     }
 
@@ -24,6 +37,7 @@ function KayitOl() {
         },
         body: JSON.stringify({
           fullName,
+          studentNo,
           username,
           email,
           password
@@ -33,12 +47,27 @@ function KayitOl() {
 
     const data = await response.json();
 
-    alert(data.message);
+    if (response.ok) {
 
-    setFullName("");
-    setUsername("");
-    setEmail("");
-    setPassword("");
+      setMessage("Kayıt başarılı");
+      setMessageType("success");
+
+      setFullName("");
+      setStudentNo("");
+      setUsername("");
+      setEmail("");
+      setPassword("");
+
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
+
+    } else {
+
+      setMessage(data.message);
+      setMessageType("error");
+
+    }
   };
 
   return (
@@ -48,11 +77,24 @@ function KayitOl() {
 
         <h1>Kayıt Ol</h1>
 
+        {message && (
+          <div className={`message ${messageType}`}>
+            {message}
+          </div>
+        )}
+
         <input
           type="text"
           placeholder="Ad Soyad"
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
+        />
+
+        <input
+          type="text"
+          placeholder="Öğrenci Numarası"
+          value={studentNo}
+          onChange={(e) => setStudentNo(e.target.value)}
         />
 
         <input

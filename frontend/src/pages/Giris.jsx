@@ -7,6 +7,9 @@ function Giris() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
+
   const navigate = useNavigate();
 
   const loginUser = async () => {
@@ -27,11 +30,40 @@ function Giris() {
 
     const data = await response.json();
 
-    alert(data.message);
+    if (!response.ok) {
 
-    if (response.ok) {
-      navigate("/dashboard");
+      setMessage(data.message);
+      setMessageType("error");
+
+      return;
     }
+
+    localStorage.setItem(
+      "studentNo",
+      data.studentNo
+    );
+
+    localStorage.setItem(
+      "username",
+      data.username
+    );
+
+    localStorage.setItem(
+      "role",
+      data.role
+    );
+
+    localStorage.setItem(
+      "token",
+      data.token
+    );
+
+    setMessage("Giriş başarılı");
+    setMessageType("success");
+
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 1000);
   };
 
   return (
@@ -39,7 +71,13 @@ function Giris() {
 
       <div className="login-card">
 
-        <h1>Rubis Kütüphane Sistemi</h1>
+        <h1>📚 Rubis Kütüphane Sistemi</h1>
+
+        {message && (
+          <div className={`message ${messageType}`}>
+            {message}
+          </div>
+        )}
 
         <input
           type="text"

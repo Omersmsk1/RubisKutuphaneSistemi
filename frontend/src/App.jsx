@@ -6,16 +6,63 @@ import Dashboard from "./pages/Dashboard";
 import Kitaplar from "./pages/Kitaplar";
 import OduncAlma from "./pages/OduncAlma";
 import KitapTeslim from "./pages/KitapTeslim";
+import Ogrenciler from "./pages/Ogrenciler";
+
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <Routes>
+
       <Route path="/" element={<Giris />} />
+
       <Route path="/kayit" element={<KayitOl />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/kitaplar" element={<Kitaplar />} />
-      <Route path="/odunc" element={<OduncAlma />} />
-      <Route path="/teslim" element={<KitapTeslim />} />
+
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/kitaplar"
+        element={
+          <ProtectedRoute>
+            <Kitaplar />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/odunc"
+        element={
+          <ProtectedRoute>
+            <OduncAlma />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/teslim"
+        element={
+          <ProtectedRoute>
+            <KitapTeslim />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/ogrenciler"
+        element={
+          <ProtectedRoute>
+            <Ogrenciler />
+          </ProtectedRoute>
+        }
+      />
+
     </Routes>
   );
 }

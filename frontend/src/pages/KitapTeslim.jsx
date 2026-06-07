@@ -53,7 +53,13 @@ function KitapTeslim() {
 
     alert("Kitap başarıyla teslim edildi");
 
-   window.location.href = "/dashboard";
+    setBooks(
+      books.filter(
+        (book) => book._id !== selectedBook
+      )
+    );
+
+    setSelectedBook("");
   };
 
   return (

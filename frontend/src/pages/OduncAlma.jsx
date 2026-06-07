@@ -31,23 +31,49 @@ function OduncAlma() {
       return;
     }
 
-    await fetch(
-      `https://rubiskutuphanesistemi.onrender.com/api/books/borrow/${selectedBook}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          studentNo
-        })
+    try {
+
+      const response = await fetch(
+        `https://rubiskutuphanesistemi.onrender.com/api/books/borrow/${selectedBook}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            studentNo
+          })
+        }
+      );
+
+      console.log("STATUS:", response.status);
+
+      const data = await response.json();
+
+      console.log("DATA:", data);
+
+      if (!response.ok) {
+        alert(data.message || "Bir hata oluştu");
+        return;
       }
-    );
 
-    alert("Kitap başarıyla ödünç alındı");
+      alert("Kitap başarıyla ödünç alındı");
 
-    window.location.href = "/dashboard";
+      setBooks(
+        books.filter(
+          (book) => book._id !== selectedBook
+        )
+      );
+
+      setSelectedBook("");
+
+    } catch (error) {
+
+      console.log(error);
+      alert("Sunucu bağlantı hatası");
+
+    }
   };
 
   return (

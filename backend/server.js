@@ -24,10 +24,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/books", bookRoutes);
-
 app.use("/api/users", userRoutes);
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log(`Server ${PORT} portunda calisiyor`);
